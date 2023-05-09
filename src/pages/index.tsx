@@ -119,6 +119,18 @@ const Home: NextPage = () => {
             />
           </div>
         </div>
+        <div className="container mx-auto mb-7 text-center">
+          Clone me if you want to have the code
+          <div>
+            <Link
+              className="text-orange-400"
+              href="https://github.com/pdeville-ledger/walletapi-unofficial-docs"
+              target="_blank"
+            >
+              https://github.com/pdeville-ledger/walletapi-unofficial-docs
+            </Link>
+          </div>
+        </div>
         <div className="container mx-auto flex flex-col gap-4 pb-12">
           <FetchAccount />
         </div>
