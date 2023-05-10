@@ -20,6 +20,10 @@ const Step = ({ link, subtitle, title }: StepProps) => (
   </Link>
 );
 
+const Terminal = () => {
+  <div className="relative z-10 col-span-3 -ml-10 rounded-xl bg-slate-800 shadow-lg dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10 xl:ml-0"></div>;
+};
+
 interface FetchAccountProps {
   inLedgerLive: boolean;
 }
@@ -61,11 +65,18 @@ const FetchAccount = ({ inLedgerLive }: FetchAccountProps) => {
       <div className="my-2 w-fit rounded-lg bg-white/5 px-2 py-1">
         manifest permission : account.list
       </div>
-      <div className="text-sm text-neutral-70">
+      <div className="mb-4 text-sm text-neutral-70">
         {" "}
-        note that you have to declare whire currency you want to call in the
+        note that you have to declare all currency you want to call in the
         currencies section of the manifest
       </div>
+      <code className=" rounded-lg bg-white/10 px-2 py-1">
+        {`
+        const accountList = await walletApiSdk?.account?.list({
+          currencyIds,
+        })`}
+      </code>
+      <div className="mt-3">accountList is of type Account[]</div>
       {inLedgerLive && (
         <div className="mt-6 flex gap-2">
           {availableCurrencys.map((availableCurrency) => (
