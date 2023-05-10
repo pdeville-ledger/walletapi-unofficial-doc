@@ -1,0 +1,22 @@
+{
+  "id": "ledger-unofficial-doc",
+  "name": "ledger-unofficial-doc",
+  "url": "https://walletapi-unofficial-doc.vercel.app/",
+  "homepageUrl": "https://walletapi-unofficial-doc.vercel.app/",
+  "platform": "all",
+  "apiVersion": "^2.0.0",
+  "manifestVersion": "1",
+  "branch": "stable",
+  "categories": ["buy"],
+  "currencies": ["bitcoin", "ethereum"],
+  "content": {},
+  "permissions": [
+    "wallet.userId",
+    "wallet.info",
+    "message.sign",
+    "currency.list",
+    "account.list",
+    "account.request"
+  ],
+  "domains": ["https://*"]
+}
