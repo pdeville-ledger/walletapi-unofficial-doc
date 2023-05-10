@@ -18,28 +18,6 @@ if (typeof window === "undefined") {
   transport.connect();
 }
 
-const fetchAddressByCurrencyId = async (
-  walletApiSdk: WalletAPIClient | undefined | null,
-  currencyId: string
-) => {
-  const userAddress = await walletApiSdk?.account?.list({
-    currencyIds: [currencyId],
-  });
-
-  if (!userAddress) throw new Error("Error Happen");
-
-  if (userAddress.length > 0) return userAddress[0];
-
-  if (userAddress.length === 0) {
-    const requestUserAddress = await walletApiSdk?.account.request({
-      currencyIds: [currencyId],
-    });
-    if (!requestUserAddress) throw new Error("Error Happen");
-    return requestUserAddress;
-  }
-  return userAddress[0];
-};
-
 const useWalletApi = () => {
   const { data: walletApiSdk } = useQuery({
     queryKey: ["setUpSdk"],
@@ -51,12 +29,6 @@ const useWalletApi = () => {
     },
     staleTime: Infinity,
   });
-
-  //   const btcAddressQuery = useQuery({
-  //     queryKey: [USER_BTC_ADDRESS_QUERY_KEY],
-  //     queryFn: () => fetchAddressByCurrencyId(walletApiSdk, "bitcoin"),
-  //     enabled: false && !walletApiSdk,
-  //   });
 
   return {
     walletApiSdk,

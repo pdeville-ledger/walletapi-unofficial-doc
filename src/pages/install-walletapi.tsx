@@ -14,6 +14,8 @@ const InstallWalletApi = () => {
           In this repository because I like it I use react query to fetch data
           <br /> use it if you want
         </div>
+
+        <div></div>
       </div>
     </div>
   );
