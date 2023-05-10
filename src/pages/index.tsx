@@ -20,7 +20,10 @@ const Step = ({ link, subtitle, title }: StepProps) => (
   </Link>
 );
 
-const FetchAccount = () => {
+interface FetchAccountProps {
+  inLedgerLive: boolean;
+}
+const FetchAccount = ({ inLedgerLive }: FetchAccountProps) => {
   const { walletApiSdk } = useWalletApi();
 
   const [currencyIds, setCurrencyId] = useState(["bitcoin"]);
@@ -33,11 +36,16 @@ const FetchAccount = () => {
   const { data, refetch } = useQuery({
     queryKey: ["account", ...currencyIds],
     queryFn: async () => {
-      console.log("currencyIds", currencyIds, walletApiSdk);
+      const info = await walletApiSdk?.wallet.info();
+
+      // console.log("currencyIds", currencyIds, walletApiSdk);
       const accountList = await walletApiSdk?.account?.list({
         currencyIds,
       });
 
+      if (!accountList) throw new Error("Error Happen");
+
+      console.log("info", info);
       // you can fetch other stuff here like nft or Idk what you want
 
       console.log("accountList", accountList);
@@ -58,26 +66,28 @@ const FetchAccount = () => {
         note that you have to declare whire currency you want to call in the
         currencies section of the manifest
       </div>
-      <div className="mt-6 flex gap-2">
-        {availableCurrencys.map((availableCurrency) => (
-          <div
-            key={availableCurrency.toString()}
-            className="cursor-pointer rounded-lg bg-white/10 px-3 py-2"
-            onClick={() => {
-              setCurrencyId(availableCurrency);
-              refetch({ queryKey: ["account", ...currencyIds] }).catch(
-                console.log
-              );
-            }}
-          >
-            <div className="flex gap-2">
-              {availableCurrency.map((c) => (
-                <div key={c}>{c}</div>
-              ))}
+      {inLedgerLive && (
+        <div className="mt-6 flex gap-2">
+          {availableCurrencys.map((availableCurrency) => (
+            <div
+              key={availableCurrency.toString()}
+              className="cursor-pointer rounded-lg bg-white/10 px-3 py-2"
+              onClick={() => {
+                setCurrencyId(availableCurrency);
+                refetch({ queryKey: ["account", ...currencyIds] }).catch(
+                  console.log
+                );
+              }}
+            >
+              <div className="flex gap-2">
+                {availableCurrency.map((c) => (
+                  <div key={c}>{c}</div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
       <div className="mt-3 flex flex-col">
         {data?.map((account) => (
           <div key={account.address}>
@@ -92,6 +102,12 @@ const FetchAccount = () => {
 
 const Home: NextPage = () => {
   const { walletApiSdk } = useWalletApi();
+
+  const { data: infoWalletApi } = useQuery({
+    queryKey: ["info"],
+    queryFn: () => walletApiSdk?.wallet.info(),
+    enabled: !!walletApiSdk,
+  });
 
   return (
     <>
@@ -132,7 +148,24 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="container mx-auto flex flex-col gap-4 pb-12">
-          <FetchAccount />
+          {!infoWalletApi ? (
+            <div className="flex items-center justify-center gap-2">
+              It look like you are not in ledger live
+              <div className="h-4 w-4 rounded-full bg-error-60"></div>
+            </div>
+          ) : (
+            <>
+              <div className="flex items-center justify-center gap-2">
+                Connected to ledger Live
+                <div className="h-4 w-4 rounded-full bg-sucess-60"></div>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <div>{infoWalletApi.wallet.name}</div>
+                <div>{infoWalletApi.wallet.version}</div>
+              </div>
+            </>
+          )}
+          <FetchAccount inLedgerLive={!!infoWalletApi} />
         </div>
       </main>
     </>
