@@ -67,12 +67,17 @@ const Home: NextPage = () => {
             </Link>
           </div>
         </div>
-        <div className="container mx-auto flex flex-col gap-4 pb-12">
+        <div className="container mx-auto flex flex-col gap-2 pb-12">
           {!infoWalletApi ? (
-            <div className="flex items-center justify-center gap-2">
-              It look like you are not in ledger live
-              <div className="h-4 w-4 rounded-full bg-error-60"></div>
-            </div>
+            <>
+              <div className="flex items-center justify-center gap-2">
+                It look like you are not in ledger live
+                <div className="h-4 w-4 rounded-full bg-error-60"></div>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                launch me in ledger as a dApp to see more
+              </div>
+            </>
           ) : (
             <>
               <div className="flex items-center justify-center gap-2">
