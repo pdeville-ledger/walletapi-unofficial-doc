@@ -5,6 +5,9 @@ const LoadManifest = () => {
     <div className="bg-black text-white">
       <div className="container mx-auto flex flex-col gap-12 px-4 py-16">
         <h1 className="text-center text-3xl">Load manifet to see your app</h1>
+        <Link href="/" className="w-fit rounded-lg bg-white/10 px-2 py-1">
+          go back
+        </Link>
         <div>
           Access ledger dev mode to see be able to see developer mode{" "}
           <Link

@@ -1,8 +1,13 @@
+import Link from "next/link";
+
 const InstallWalletApi = () => {
   return (
     <div className="bg-black text-white">
       <div className="container mx-auto flex flex-col gap-12 px-4 py-16">
         <h1 className="text-center text-3xl">Install wallet api</h1>
+        <Link href="/" className="w-fit rounded-lg bg-white/10 px-2 py-1">
+          go back
+        </Link>
         <div>Install ledger wallet api to communicate with ledger live</div>
         <div className="mx-auto select-all rounded-lg bg-white/10 p-3">
           {" "}
